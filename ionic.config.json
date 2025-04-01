@@ -1,0 +1,7 @@
+{
+  "name": "smart-cart",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular-standalone"
+}
