@@ -1,13 +1,12 @@
 import { Routes } from '@angular/router';
+import { HomeComponent } from './home/home.component';
+import { NewListComponent } from './new-list/new-list.component';
+import { LoadListComponent } from './load-list/load-list.component';
+import { DeleteListComponent } from './delete-list/delete-list.component';
 
 export const routes: Routes = [
-  {
-    path: 'home',
-    loadComponent: () => import('./home/home.page').then((m) => m.HomePage),
-  },
-  {
-    path: '',
-    redirectTo: 'home',
-    pathMatch: 'full',
-  },
+  { path: '', component: HomeComponent },
+  { path: 'new-list', component: NewListComponent },
+  { path: 'load-list', component: LoadListComponent },
+  { path: 'delete-list', component: DeleteListComponent },
 ];
