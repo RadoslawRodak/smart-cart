@@ -16,63 +16,82 @@ import { Firestore, collection, addDoc } from '@angular/fire/firestore';
     <ion-header>
       <ion-toolbar color="primary">
         <ion-title>New List</ion-title>
+        <ion-buttons slot="start">
+          <ion-back-button defaultHref="/"></ion-back-button>
+        </ion-buttons>
       </ion-toolbar>
     </ion-header>
-    
+
     <ion-content class="ion-padding">
-      <div class="new-list-container">
-        <h2>List</h2>
-        <ion-input [(ngModel)]="listName" placeholder="Name..." class="name-input"></ion-input>
-        
-        <div class="item-input-container">
-          <ion-input [(ngModel)]="newItem" placeholder="Add Item..." class="item-input"></ion-input>
-          <ion-button color="success" (click)="addItem()">
-            <ion-icon name="add-circle"></ion-icon>
-          </ion-button>
-          <ion-button color="danger" (click)="clearItem()">
-            <ion-icon name="close-circle"></ion-icon>
-          </ion-button>
-        </div>
-        
-        <ion-list>
-          <ion-item *ngFor="let item of items; let i = index">
-            {{ item }}
-            <ion-button fill="clear" color="danger" (click)="removeItem(i)">
-              <ion-icon name="trash"></ion-icon>
-            </ion-button>
+      <ion-card>
+        <ion-card-header>
+          <ion-card-title>Create a New Shopping List</ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+          <!-- List Name Input -->
+          <ion-item>
+            <ion-label position="floating">List Name</ion-label>
+            <ion-input [(ngModel)]="listName" placeholder="Enter list name" required></ion-input>
           </ion-item>
-        </ion-list>
-        
-        <div class="button-container">
-          <ion-button color="medium" routerLink="/" expand="full">Back</ion-button>
-          <ion-button color="success" (click)="saveList()" expand="full">Save</ion-button>
-        </div>
-      </div>
+
+          <!-- Item Input Section -->
+          <ion-item>
+            <ion-label position="floating">Add Item</ion-label>
+            <ion-input [(ngModel)]="newItem" placeholder="Enter item" required></ion-input>
+          </ion-item>
+
+          <div class="item-buttons">
+            <ion-button color="success" (click)="addItem()">
+              <ion-icon slot="start" name="add-circle"></ion-icon>
+              Add Item
+            </ion-button>
+            <ion-button color="danger" (click)="clearItem()">
+              <ion-icon slot="start" name="close-circle"></ion-icon>
+              Clear Item
+            </ion-button>
+          </div>
+
+          <!-- Display Added Items -->
+          <ion-list>
+            <ion-item *ngFor="let item of items; let i = index">
+              {{ item }}
+              <ion-button fill="clear" color="danger" (click)="removeItem(i)">
+                <ion-icon name="trash"></ion-icon>
+              </ion-button>
+            </ion-item>
+          </ion-list>
+
+          <!-- Save & Back Buttons -->
+          <div class="button-container">
+            <ion-button color="medium" routerLink="/" expand="full">Back</ion-button>
+            <ion-button color="success" (click)="saveList()" expand="full">Save List</ion-button>
+          </div>
+        </ion-card-content>
+      </ion-card>
     </ion-content>
   `,
   styles: [`
-    .new-list-container {
-      text-align: center;
-      padding: 20px;
+    ion-card {
+      margin-top: 20px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     }
-    .name-input, .item-input {
-      width: 90%;
-      margin-bottom: 10px;
-    }
-    .item-input-container {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      justify-content: center;
-    }
-    .button-container {
+
+    .item-buttons {
       display: flex;
       justify-content: space-between;
       margin-top: 20px;
     }
-    .list-container {
-      background-color: #ffffff !important;
-      color: #000000 !important;
+
+    .button-container {
+      margin-top: 30px;
+    }
+
+    ion-item {
+      margin-bottom: 15px;
+    }
+
+    ion-button {
+      width: 48%;
     }
   `]
 })
@@ -81,7 +100,8 @@ export class NewListComponent {
   newItem = '';
   items: string[] = [];
 
-  constructor() {
+  // Constructor to inject Firestore and add icons
+  constructor(private firestore: Firestore) {
     addIcons({ trash, addCircle, closeCircle });
   }
 
@@ -100,12 +120,22 @@ export class NewListComponent {
     this.newItem = '';
   }
 
-  saveList() {
+  async saveList() {
     if (this.listName.trim() && this.items.length > 0) {
-      console.log('List Saved:', { name: this.listName, items: this.items });
-      alert('List saved successfully!');
+      try {
+        const listsRef = collection(this.firestore, 'lists');
+        await addDoc(listsRef, {
+          name: this.listName,
+          items: this.items,
+          timestamp: new Date()
+        });
+        alert('List saved to Firebase!');
+      } catch (err) {
+        console.error('Error saving list:', err);
+        alert('Failed to save. Try again.');
+      }
     } else {
-      alert('Please enter a list name and add items before saving.');
+      alert('Please enter a list name and at least one item.');
     }
   }
 }

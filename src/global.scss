@@ -35,3 +35,70 @@
 /* @import "@ionic/angular/css/palettes/dark.always.css"; */
 /* @import "@ionic/angular/css/palettes/dark.class.css"; */
 @import '@ionic/angular/css/palettes/dark.system.css';
+
+
+/* Global Dark and Light Theme Styling */
+
+/* Light Mode */
+.light-theme {
+    --ion-background-color: #ffffff;
+    --ion-text-color: #000000;  /* Text color for light mode */
+  }
+  
+  /* Dark Mode */
+  .dark-theme {
+    --ion-background-color: #121212;  /* Dark background for the whole app */
+    --ion-text-color: #f1f1f1;  /* Text color for dark mode */
+  }
+  
+  /* Override for ion-card to keep the background white */
+  ion-card {
+    --ion-card-background: #ffffff;  /* White card background */
+  }
+  
+  /* Text color for ion-card content */
+  .dark-theme ion-card-header,
+  .dark-theme ion-card-title,
+  .dark-theme ion-card-content,
+  .light-theme ion-card-header,
+  .light-theme ion-card-title,
+  .light-theme ion-card-content {
+    --ion-text-color: var(--ion-text-color);
+  }
+  
+  /* Additional styling for cards */
+  .feature-card {
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+  }
+  
+  /* Hero Section */
+  .hero-section {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  /* Featured Section */
+  .featured-section {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  /* Recent Activities Section */
+  .recent-activities {
+    margin-top: 30px;
+  }
+  
+  .recent-activities h3 {
+    font-size: 22px;
+    font-weight: bold;
+    margin-bottom: 15px;
+  }
+  
+  .recent-activities ion-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
