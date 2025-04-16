@@ -1,13 +1,28 @@
 import { Component, inject } from '@angular/core';
-import { IonicModule, AlertController } from '@ionic/angular';
-import { CommonModule } from '@angular/common';
-import { collection, collectionData, deleteDoc, doc, Firestore } from '@angular/fire/firestore';
+import { CommonModule } from '@angular/common'; 
+import { AlertController } from '@ionic/angular/standalone';
+import { IonButton, IonIcon, IonCard, IonCardHeader, IonCardTitle, IonCardContent, IonHeader, IonToolbar, IonTitle, IonBackButton, IonButtons, IonContent } from '@ionic/angular/standalone';  // Import individual components
+import { Firestore, collection, collectionData, deleteDoc, doc } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-delete-list',
   standalone: true,
-  imports: [IonicModule, CommonModule],
+  imports: [
+    CommonModule, 
+    IonButton, 
+    IonIcon, 
+    IonCard, 
+    IonCardHeader, 
+    IonCardTitle, 
+    IonCardContent, 
+    IonHeader, 
+    IonToolbar, 
+    IonTitle, 
+    IonBackButton, 
+    IonButtons,
+    IonContent
+  ],
   template: `
     <ion-header>
       <ion-toolbar color="danger">
@@ -98,7 +113,7 @@ export class DeleteListComponent {
           text: 'Delete',
           role: 'destructive',
           handler: async () => {
-            await deleteDoc(doc(this.firestore, 'lists', id));
+            await deleteDoc(doc(this.firestore, 'lists', id)); // Firebase Firestore deletion
           }
         }
       ]

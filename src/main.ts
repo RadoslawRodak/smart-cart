@@ -8,6 +8,7 @@ import { firebaseConfig } from './environments/firebase-config';
 import { routes } from './app/app.routes';
 import { AppComponent } from './app/app.component';
 
+// Correct usage of provideIonicAngular() in standalone mode
 bootstrapApplication(AppComponent, {
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
