@@ -66,25 +66,6 @@ import { checkmarkCircle, refreshCircle, closeCircle, eye, cart } from 'ionicons
       </ion-card-content>
     </ion-card>
   </div>
-
-  <!-- Recent Activities (Optional) -->
-  <div class="recent-activities">
-    <h3>Recent Activities</h3>
-    <ion-list>
-      <ion-item>
-        <ion-label>Shopping List 1</ion-label>
-        <ion-button fill="clear" color="medium" routerLink="/load-list">
-          <ion-icon name="eye"></ion-icon> View
-        </ion-button>
-      </ion-item>
-      <ion-item>
-        <ion-label>Shopping List 2</ion-label>
-        <ion-button fill="clear" color="medium" routerLink="/load-list">
-          <ion-icon name="eye"></ion-icon> View
-        </ion-button>
-      </ion-item>
-    </ion-list>
-  </div>
 </ion-content>
   `,
   styles: [`
@@ -142,7 +123,7 @@ export class HomeComponent {
 
   constructor() {
     this.isDarkMode = localStorage.getItem('darkMode') === 'true';
-    addIcons({ moon, sunny }); // ✅ Register the icons
+    addIcons({ moon, sunny });
     this.loadTheme();
 
     addIcons({
