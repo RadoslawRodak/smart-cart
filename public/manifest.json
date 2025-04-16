@@ -1,0 +1,22 @@
+{
+  "name": "Smart Cart",
+  "short_name": "Cart",
+  "dir": "auto",
+  "description": "A shopping list app",
+  "start_url": "/index.html",
+  "background_color": "#ffffff",
+  "theme_color": "#3880ff",
+  "display": "standalone",
+  "icons": [
+    {
+      "src": "assets/icons/icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "assets/icons/icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

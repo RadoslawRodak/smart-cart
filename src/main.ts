@@ -7,6 +7,8 @@ import { firebaseConfig } from './environments/firebase-config';
 
 import { routes } from './app/app.routes';
 import { AppComponent } from './app/app.component';
+import { isDevMode } from '@angular/core';
+import { provideServiceWorker } from '@angular/service-worker';
 
 // Correct usage of provideIonicAngular() in standalone mode
 bootstrapApplication(AppComponent, {
@@ -15,6 +17,9 @@ bootstrapApplication(AppComponent, {
     provideIonicAngular(),
     provideRouter(routes, withPreloading(PreloadAllModules)),
     provideFirebaseApp(() => initializeApp(firebaseConfig)),
-    provideFirestore(() => getFirestore()),
+    provideFirestore(() => getFirestore()), provideServiceWorker('ngsw-worker.js', {
+            enabled: !isDevMode(),
+            registrationStrategy: 'registerWhenStable:30000'
+          }),
   ],
 });
