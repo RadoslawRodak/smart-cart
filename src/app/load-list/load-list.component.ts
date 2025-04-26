@@ -69,16 +69,21 @@ import { IonHeader, IonToolbar, IonTitle, IonButtons, IonButton, IonIcon, IonCon
   `
 })
 export class LoadListComponent {
+  // Inject Firestore and Router services
   private firestore = inject(Firestore);
   private router = inject(Router);
+  // Observable to hold the list of shopping lists
   lists$: Observable<any[]>;
 
   constructor() {
+    // Initialize the lists$ observable with data from Firestore
     const listsRef = collection(this.firestore, 'lists');
+    // Use collectionData to get the data from the Firestore collection
     this.lists$ = collectionData(listsRef, { idField: 'id' });
   }
 
   viewList(list: any) {
+    // Navigate to the display list component with the selected list's ID
     this.router.navigate(['/display-list', list.id]);
   }
 }

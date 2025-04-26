@@ -5,6 +5,7 @@ import { LoadListComponent } from './load-list/load-list.component';
 import { DeleteListComponent } from './delete-list/delete-list.component';
 import { DisplayListComponent } from './display-list/display-list.component';
 
+// Define the routes for the application
 export const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'new-list', component: NewListComponent },

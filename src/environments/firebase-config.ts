@@ -1,3 +1,4 @@
+// This file contains the Firebase configuration for the Smart Cart application.
 export const firebaseConfig = {
     apiKey: "AIzaSyCpdbdweNIabPsuVNe84WhRRz9l4K9E5fs",
     authDomain: "smart-cart-1f212.firebaseapp.com",

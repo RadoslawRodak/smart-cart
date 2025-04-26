@@ -13,19 +13,19 @@ import { checkmarkCircle, refreshCircle, closeCircle, cart } from 'ionicons/icon
   selector: 'app-home',
   standalone: true,
   imports: [
-    CommonModule, 
-    RouterModule, 
-    FormsModule, 
-    IonHeader, 
-    IonToolbar, 
-    IonTitle, 
-    IonButtons, 
-    IonButton, 
-    IonIcon, 
-    IonContent, 
-    IonCard, 
-    IonCardHeader, 
-    IonCardTitle, 
+    CommonModule,
+    RouterModule,
+    FormsModule,
+    IonHeader,
+    IonToolbar,
+    IonTitle,
+    IonButtons,
+    IonButton,
+    IonIcon,
+    IonContent,
+    IonCard,
+    IonCardHeader,
+    IonCardTitle,
     IonCardContent,
   ],
   template: `
@@ -126,13 +126,17 @@ import { checkmarkCircle, refreshCircle, closeCircle, cart } from 'ionicons/icon
   `]
 })
 export class HomeComponent {
+  // Property to hold the dark mode state
   isDarkMode = false;
 
   constructor() {
+    // Check local storage for dark mode preference and set the initial state
     this.isDarkMode = localStorage.getItem('darkMode') === 'true';
     addIcons({ moon, sunny });
+    // Load the theme based on the dark mode state
     this.loadTheme();
 
+    // Add icons for the app
     addIcons({
       checkmarkCircle,
       refreshCircle,
@@ -141,18 +145,21 @@ export class HomeComponent {
     });
   }
 
+  // Method to toggle dark mode and save the preference in local storage
   toggleDarkMode() {
     this.isDarkMode = !this.isDarkMode;
     localStorage.setItem('darkMode', this.isDarkMode.toString());
     this.applyTheme();
   }
 
+  // Method to load the theme based on the stored preference
   loadTheme() {
     const storedTheme = localStorage.getItem('darkMode');
     this.isDarkMode = storedTheme === 'true';
     this.applyTheme();
   }
 
+  // Method to apply the theme based on the dark mode state
   applyTheme() {
     if (this.isDarkMode) {
       document.body.classList.add('dark-theme');

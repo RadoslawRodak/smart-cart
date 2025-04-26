@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { CommonModule } from '@angular/common'; 
+import { CommonModule } from '@angular/common';
 import { AlertController } from '@ionic/angular/standalone';
 import { IonButton, IonIcon, IonCard, IonCardHeader, IonCardTitle, IonCardContent, IonHeader, IonToolbar, IonTitle, IonBackButton, IonButtons, IonContent } from '@ionic/angular/standalone';  // Import individual components
 import { Firestore, collection, collectionData, deleteDoc, doc } from '@angular/fire/firestore';
@@ -9,17 +9,17 @@ import { Observable } from 'rxjs';
   selector: 'app-delete-list',
   standalone: true,
   imports: [
-    CommonModule, 
-    IonButton, 
-    IonIcon, 
-    IonCard, 
-    IonCardHeader, 
-    IonCardTitle, 
-    IonCardContent, 
-    IonHeader, 
-    IonToolbar, 
-    IonTitle, 
-    IonBackButton, 
+    CommonModule,
+    IonButton,
+    IonIcon,
+    IonCard,
+    IonCardHeader,
+    IonCardTitle,
+    IonCardContent,
+    IonHeader,
+    IonToolbar,
+    IonTitle,
+    IonBackButton,
     IonButtons,
     IonContent
   ],
@@ -91,16 +91,22 @@ import { Observable } from 'rxjs';
   `]
 })
 export class DeleteListComponent {
+  // Injecting Firestore and AlertController for database operations and alerts
   firestore = inject(Firestore);
   alertCtrl = inject(AlertController);
+  // Observable to hold the list of shopping lists
   lists$: Observable<any[]>;
 
   constructor() {
+    // Initialize the lists$ observable with data from Firestore
     const listsRef = collection(this.firestore, 'lists');
+    // Use collectionData to get the data from the Firestore collection
     this.lists$ = collectionData(listsRef, { idField: 'id' });
   }
 
+  // Function to confirm deletion of a list
   async confirmDelete(id: string) {
+    // Create an alert to confirm deletion
     const alert = await this.alertCtrl.create({
       header: 'Delete List',
       message: 'Are you sure you want to delete this list?',
@@ -112,13 +118,16 @@ export class DeleteListComponent {
         {
           text: 'Delete',
           role: 'destructive',
+          // Handler to delete the list from Firestore
           handler: async () => {
-            await deleteDoc(doc(this.firestore, 'lists', id)); // Firebase Firestore deletion
+            // Reference to the document to be deleted
+            await deleteDoc(doc(this.firestore, 'lists', id));
           }
         }
       ]
     });
 
+    // Present the alert to the user
     await alert.present();
   }
 }

@@ -7,8 +7,10 @@ import { trash, addCircle, closeCircle } from 'ionicons/icons';
 import { Firestore, collection, addDoc } from '@angular/fire/firestore';
 
 // Standalone Ionic imports
-import { IonHeader, IonToolbar, IonTitle, IonButtons, IonButton, IonIcon, IonContent, IonCard, IonCardHeader, IonCardTitle,
-        IonCardContent, IonItem, IonLabel, IonInput, IonList, IonBackButton} from '@ionic/angular/standalone';
+import {
+  IonHeader, IonToolbar, IonTitle, IonButtons, IonButton, IonIcon, IonContent, IonCard, IonCardHeader, IonCardTitle,
+  IonCardContent, IonItem, IonLabel, IonInput, IonList, IonBackButton
+} from '@ionic/angular/standalone';
 
 @Component({
   selector: 'app-new-list',
@@ -117,6 +119,7 @@ import { IonHeader, IonToolbar, IonTitle, IonButtons, IonButton, IonIcon, IonCon
   `]
 })
 export class NewListComponent {
+  // Properties for the list name and items
   listName = '';
   newItem = '';
   items: string[] = [];
@@ -127,24 +130,31 @@ export class NewListComponent {
   }
 
   addItem() {
+    // Add the new item to the list if it's not empty
     if (this.newItem.trim()) {
       this.items.push(this.newItem.trim());
+      // Clear the input field after adding the item
       this.newItem = '';
     }
   }
 
+  // Remove an item from the list by its index
   removeItem(index: number) {
     this.items.splice(index, 1);
   }
 
   clearItem() {
+    // Clear the input field without adding the item to the list
     this.newItem = '';
   }
 
   async saveList() {
+    // Save the list to Firebase if the list name and items are valid
     if (this.listName.trim() && this.items.length > 0) {
       try {
+        // Reference to the Firestore collection
         const listsRef = collection(this.firestore, 'lists');
+        // Add a new document to the collection with the list name and items
         await addDoc(listsRef, {
           name: this.listName,
           items: this.items,
@@ -152,10 +162,12 @@ export class NewListComponent {
         });
         alert('List saved to Firebase!');
       } catch (err) {
+        // Handle any errors that occur during the save operation
         console.error('Error saving list:', err);
         alert('Failed to save. Try again.');
       }
     } else {
+      // Alert the user if the list name or items are invalid
       alert('Please enter a list name and at least one item.');
     }
   }

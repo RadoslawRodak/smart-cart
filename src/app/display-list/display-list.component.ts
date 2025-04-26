@@ -3,7 +3,7 @@ import { ActivatedRoute, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 
 // Standalone imports from Ionic
-import { IonHeader, IonToolbar, IonTitle, IonButtons, IonBackButton, IonContent, IonIcon, IonCard, IonList, IonItem, IonLabel, IonCheckbox } from '@ionic/angular/standalone'; 
+import { IonHeader, IonToolbar, IonTitle, IonButtons, IonBackButton, IonContent, IonIcon, IonCard, IonList, IonItem, IonLabel, IonCheckbox } from '@ionic/angular/standalone';
 
 
 import { Firestore, doc, getDoc } from '@angular/fire/firestore';
@@ -17,19 +17,19 @@ interface List {
   selector: 'app-display-list',
   standalone: true,
   imports: [
-    CommonModule, 
-    RouterModule, 
-    IonHeader, 
-    IonToolbar, 
-    IonTitle, 
-    IonButtons, 
-    IonBackButton, 
-    IonContent, 
-    IonIcon, 
-    IonCard, 
-    IonList, 
-    IonItem, 
-    IonLabel, 
+    CommonModule,
+    RouterModule,
+    IonHeader,
+    IonToolbar,
+    IonTitle,
+    IonButtons,
+    IonBackButton,
+    IonContent,
+    IonIcon,
+    IonCard,
+    IonList,
+    IonItem,
+    IonLabel,
     IonCheckbox,
   ],
   template: `
@@ -60,17 +60,25 @@ interface List {
     </ion-content>
   `
 })
+// This component is responsible for displaying a specific shopping list
 export class DisplayListComponent implements OnInit {
+  // Injecting necessary services and modules
   private route = inject(ActivatedRoute);
   private firestore = inject(Firestore);
-  list: List | null = null; // Define a type for the list
+  // The list object that will hold the data fetched from Firestore
+  list: List | null = null; 
 
+  // The ngOnInit lifecycle hook is used to fetch the list data when the component initializes
   async ngOnInit() {
+    // Getting the list ID from the route parameters
     const id = this.route.snapshot.paramMap.get('id');
     if (id) {
+      // Fetching the document from Firestore using the ID
       const docRef = doc(this.firestore, `lists/${id}`);
+      // Getting the document snapshot
       const snap = await getDoc(docRef);
       if (snap.exists()) {
+        // If the document exists, assign the data to the list property
         this.list = snap.data() as List;
       }
     }
